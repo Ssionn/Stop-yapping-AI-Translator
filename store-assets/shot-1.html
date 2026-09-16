@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="color-scheme" content="light" />
+<title>shot 1</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 800px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #14161d;
+    background: #f6f7fb;
+    -webkit-font-smoothing: antialiased;
+  }
+  .canvas {
+    position: relative; width: 1280px; height: 800px; overflow: hidden;
+    background:
+      radial-gradient(820px 620px at 92% 6%, #e7e3ff 0%, rgba(231,227,255,0) 62%),
+      radial-gradient(760px 560px at 2% 100%, #e6efff 0%, rgba(230,239,255,0) 58%),
+      linear-gradient(180deg, #ffffff 0%, #f3f4fa 100%);
+  }
+
+  /* ---- left column ---- */
+  .left {
+    position: absolute; left: 82px; top: 0; height: 800px; width: 540px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800;
+            letter-spacing: .09em; text-transform: uppercase; color: #6366f1; margin-bottom: 22px; }
+  .kicker .mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
+                  background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; font-size: 17px; font-weight: 800; }
+  h1 { font-size: 62px; line-height: 1.02; letter-spacing: -.025em; font-weight: 800; }
+  h1 .accent { background: linear-gradient(135deg, #6366f1, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { margin-top: 22px; font-size: 22px; line-height: 1.5; color: #5b6172; max-width: 500px; }
+  ul { margin-top: 34px; list-style: none; display: flex; flex-direction: column; gap: 15px; }
+  li { display: flex; align-items: center; gap: 13px; font-size: 18px; color: #33384a; font-weight: 500; }
+  .tick { width: 27px; height: 27px; border-radius: 50%; background: #eef0ff; color: #4f46e5;
+          display: grid; place-items: center; font-size: 14px; font-weight: 800; flex: none; }
+
+  /* ---- right column ---- */
+  .right { position: absolute; right: 74px; top: 0; height: 800px; width: 600px; }
+  .browser {
+    position: absolute; left: 10px; top: 128px; width: 560px; height: 610px;
+    background: #fff; border-radius: 16px; border: 1px solid #e2e5ee;
+    box-shadow: 0 30px 70px rgba(16, 18, 28, .13); overflow: hidden; opacity: .93;
+  }
+  .browser-bar { height: 42px; background: #f1f3f9; border-bottom: 1px solid #e6e9f1; display: flex; align-items: center; gap: 7px; padding: 0 16px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .url { margin-left: 10px; flex: 1; height: 22px; border-radius: 11px; background: #fff; border: 1px solid #e2e5ee;
+         font-size: 12px; color: #8a90a2; display: flex; align-items: center; padding: 0 12px; }
+  .article { padding: 26px 30px; }
+  .art-title { font-size: 25px; font-weight: 800; letter-spacing: -.01em; color: #14161d; }
+  .byline { margin-top: 8px; font-size: 12px; color: #8a90a2; }
+  .para { margin-top: 18px; display: flex; flex-direction: column; gap: 9px; }
+  .line { height: 11px; border-radius: 6px; background: #e9ecf4; }
+  .line.w1 { width: 100%; } .line.w2 { width: 94%; } .line.w3 { width: 97%; } .line.w4 { width: 72%; }
+  .hero-img { margin-top: 20px; height: 96px; border-radius: 10px; background: linear-gradient(120deg, #e4e7f5, #eef1fa); }
+
+  /* ---- popup mock ---- */
+  .popup {
+    position: absolute; right: 46px; top: 176px; width: 380px;
+    background: #fff; border: 1px solid #e2e5ee; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 34px 80px rgba(16, 18, 28, .22), 0 4px 12px rgba(16,18,28,.06);
+  }
+  .p-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #e2e5ee; }
+  .p-brand { display: flex; align-items: center; gap: 9px; }
+  .p-mark { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 8px;
+            background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; font-weight: 800; font-size: 14px; }
+  .p-name { font-weight: 800; font-size: 14px; letter-spacing: .01em; }
+  .p-settings { font-size: 12px; font-weight: 600; color: #5b6172; }
+  .p-controls { display: grid; grid-template-columns: 1fr 1.2fr; gap: 9px; padding: 12px 14px 4px; }
+  .p-field label { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #8a90a2; margin-bottom: 5px; }
+  .p-select { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; font-size: 12.5px;
+              border: 1px solid #cdd2e0; border-radius: 10px; background: #fff; }
+  .p-select span { color: #8a90a2; font-size: 10px; }
+  .p-chips { display: flex; gap: 7px; padding: 10px 14px; }
+  .p-chip { font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px; border: 1px solid #cdd2e0; color: #5b6172; }
+  .p-chip.active { background: #eef0ff; border-color: #6366f1; color: #4f46e5; }
+  .p-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 2px 14px 10px; }
+  .p-title { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .p-chars { font-size: 11px; color: #8a90a2; flex: none; }
+  .p-output { padding: 0 14px 12px; font-size: 13px; line-height: 1.55; }
+  .p-output p { margin-bottom: 10px; }
+  .p-output ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .p-output li { display: flex; gap: 9px; font-size: 13px; color: #33384a; font-weight: 400; }
+  .p-output li::before { content: "•"; color: #6366f1; font-weight: 800; }
+  .p-footer { display: flex; gap: 9px; padding: 12px 14px; border-top: 1px solid #e2e5ee; background: #f6f7fb; }
+  .p-btn { flex: 1; text-align: center; padding: 9px 14px; border-radius: 10px; background: #6366f1; color: #fff; font-weight: 700; font-size: 13px; }
+  .p-btn2 { padding: 9px 16px; border-radius: 10px; border: 1px solid #cdd2e0; background: #fff; font-weight: 700; font-size: 13px; color: #14161d; }
+
+  .caption { position: absolute; right: 74px; top: 92px; width: 600px; text-align: center;
+             font-size: 15px; font-weight: 700; color: #5b6172; letter-spacing: .02em; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="left">
+      <div class="kicker"><span class="mark">Y</span> Stop Yapping</div>
+      <h1>Stop reading.<br /><span class="accent">Start knowing.</span></h1>
+      <p class="sub">Turn any long page into a 30-second summary, right where you are.</p>
+      <ul>
+        <li><span class="tick">✓</span> One click on any article, thread, or doc</li>
+        <li><span class="tick">✓</span> TL;DR, bullets, summary, or detailed</li>
+        <li><span class="tick">✓</span> Bring your own AI key — no account needed</li>
+      </ul>
+    </div>
+
+    <div class="right">
+      <div class="caption">Summarize the page you're on, without leaving it</div>
+
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+          <span class="url">example.com/the-state-of-remote-work-2026</span>
+        </div>
+        <div class="article">
+          <div class="art-title">The State of Remote Work in 2026</div>
+          <div class="byline">By A. Writer · 14 min read</div>
+          <div class="para">
+            <div class="line w1"></div><div class="line w2"></div><div class="line w3"></div><div class="line w4"></div>
+          </div>
+          <div class="hero-img"></div>
+          <div class="para">
+            <div class="line w3"></div><div class="line w1"></div><div class="line w2"></div>
+            <div class="line w4"></div><div class="line w1"></div><div class="line w3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup">
+        <div class="p-head">
+          <div class="p-brand"><span class="p-mark">Y</span><span class="p-name">Stop Yapping</span></div>
+          <div class="p-settings">Settings</div>
+        </div>
+        <div class="p-controls">
+          <div class="p-field"><label>Provider</label><div class="p-select">DeepSeek <span>▾</span></div></div>
+          <div class="p-field"><label>Model</label><div class="p-select">deepseek-flash <span>▾</span></div></div>
+        </div>
+        <div class="p-chips">
+          <span class="p-chip active">TL;DR</span><span class="p-chip">Bullets</span><span class="p-chip">Summary</span><span class="p-chip">Detailed</span>
+        </div>
+        <div class="p-meta">
+          <span class="p-title">The State of Remote Work in 2026</span><span class="p-chars">14.2k chars</span>
+        </div>
+        <div class="p-output">
+          <p><strong>TL;DR: Remote work has settled at ~28% of workdays, but the real shift is from fully remote to hybrid and async-first teams.</strong></p>
+          <ul>
+            <li>Hybrid (3 days in office) is now the norm at 46% of companies.</li>
+            <li>Fully remote roles fell to 12%, concentrated in software and support.</li>
+            <li>Return-to-office mandates track a 9% rise in voluntary attrition.</li>
+          </ul>
+        </div>
+        <div class="p-footer"><div class="p-btn">Summarize page</div><div class="p-btn2">Copy</div></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

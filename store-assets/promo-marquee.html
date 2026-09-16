@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="color-scheme" content="light" />
+<title>marquee promo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1400px; height: 560px; overflow: hidden; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #14161d; -webkit-font-smoothing: antialiased; }
+  .canvas {
+    position: relative; width: 1400px; height: 560px; overflow: hidden;
+    background:
+      radial-gradient(760px 520px at 96% 4%, #e7e3ff 0%, rgba(231,227,255,0) 62%),
+      radial-gradient(680px 480px at 0% 100%, #e6efff 0%, rgba(230,239,255,0) 58%),
+      linear-gradient(180deg, #ffffff 0%, #f3f4fa 100%);
+  }
+  .left { position: absolute; left: 84px; top: 0; height: 560px; width: 640px; display: flex; flex-direction: column; justify-content: center; }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800;
+            letter-spacing: .09em; text-transform: uppercase; color: #6366f1; margin-bottom: 18px; }
+  .kicker .mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px;
+                  background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; font-size: 16px; font-weight: 800; }
+  h1 { font-size: 56px; line-height: 1.03; letter-spacing: -.025em; font-weight: 800; }
+  h1 .accent { background: linear-gradient(135deg, #6366f1, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { margin-top: 16px; font-size: 18px; line-height: 1.5; color: #5b6172; max-width: 560px; }
+  .pills { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .pills span { font-size: 13px; font-weight: 700; padding: 7px 14px; border-radius: 999px;
+                background: #fff; border: 1px solid #cdd2e0; color: #33384a; }
+
+  .right { position: absolute; right: 78px; top: 0; height: 560px; width: 580px; }
+  .browser {
+    position: absolute; left: 0; top: 70px; width: 540px; height: 430px;
+    background: #fff; border-radius: 14px; border: 1px solid #e2e5ee;
+    box-shadow: 0 26px 60px rgba(16,18,28,.13); overflow: hidden; opacity: .94;
+  }
+  .browser-bar { height: 36px; background: #f1f3f9; border-bottom: 1px solid #e6e9f1; display: flex; align-items: center; gap: 6px; padding: 0 14px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .url { margin-left: 8px; flex: 1; height: 20px; border-radius: 10px; background: #fff; border: 1px solid #e2e5ee;
+         font-size: 11px; color: #8a90a2; display: flex; align-items: center; padding: 0 11px; }
+  .article { padding: 20px 24px; }
+  .art-title { font-size: 21px; font-weight: 800; }
+  .para { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .line { height: 10px; border-radius: 5px; background: #e9ecf4; }
+  .w1 { width: 100%; } .w2 { width: 93%; } .w3 { width: 97%; } .w4 { width: 70%; }
+
+  .popup {
+    position: absolute; right: 0; top: 52px; width: 352px;
+    background: #fff; border: 1px solid #e2e5ee; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 70px rgba(16,18,28,.22), 0 4px 12px rgba(16,18,28,.06);
+  }
+  .p-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 13px; border-bottom: 1px solid #e2e5ee; }
+  .p-brand { display: flex; align-items: center; gap: 8px; }
+  .p-mark { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 7px;
+            background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; font-weight: 800; font-size: 13px; }
+  .p-name { font-weight: 800; font-size: 13px; }
+  .p-settings { font-size: 11.5px; font-weight: 600; color: #5b6172; }
+  .p-controls { display: grid; grid-template-columns: 1fr 1.2fr; gap: 8px; padding: 11px 13px 2px; }
+  .p-field label { display: block; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #8a90a2; margin-bottom: 4px; }
+  .p-select { display: flex; align-items: center; justify-content: space-between; padding: 6px 9px; font-size: 12px;
+              border: 1px solid #cdd2e0; border-radius: 9px; }
+  .p-chips { display: flex; gap: 6px; padding: 9px 13px; }
+  .p-chip { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px; border: 1px solid #cdd2e0; color: #5b6172; }
+  .p-chip.active { background: #eef0ff; border-color: #6366f1; color: #4f46e5; }
+  .p-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 0 13px 8px; }
+  .p-title { font-weight: 700; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .p-chars { font-size: 10.5px; color: #8a90a2; flex: none; }
+  .p-output { padding: 0 13px 10px; font-size: 12.5px; line-height: 1.5; }
+  .p-output p { margin-bottom: 9px; }
+  .p-output ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .p-output li { display: flex; gap: 8px; color: #33384a; }
+  .p-output li::before { content: "•"; color: #6366f1; font-weight: 800; }
+  .p-footer { display: flex; gap: 8px; padding: 10px 13px; border-top: 1px solid #e2e5ee; background: #f6f7fb; }
+  .p-btn { flex: 1; text-align: center; padding: 8px 12px; border-radius: 9px; background: #6366f1; color: #fff; font-weight: 700; font-size: 12.5px; }
+  .p-btn2 { padding: 8px 14px; border-radius: 9px; border: 1px solid #cdd2e0; background: #fff; font-weight: 700; font-size: 12.5px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="left">
+      <div class="kicker"><span class="mark">Y</span> Stop Yapping</div>
+      <h1>Stop reading.<br /><span class="accent">Start knowing.</span></h1>
+      <p class="sub">Turn any long page into a 30-second summary, right where you are. Bring your own AI key — no account, no tracking.</p>
+      <div class="pills">
+        <span>One click on any page</span>
+        <span>TL;DR · Bullets · Summary · Detailed</span>
+        <span>Works with your provider</span>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="dot" style="background:#ff5f57"></span>
+          <span class="dot" style="background:#febc2e"></span>
+          <span class="dot" style="background:#28c840"></span>
+          <span class="url">example.com/the-state-of-remote-work-2026</span>
+        </div>
+        <div class="article">
+          <div class="art-title">The State of Remote Work in 2026</div>
+          <div class="para">
+            <div class="line w1"></div><div class="line w2"></div><div class="line w3"></div><div class="line w4"></div>
+          </div>
+          <div class="para">
+            <div class="line w3"></div><div class="line w1"></div><div class="line w2"></div>
+            <div class="line w4"></div><div class="line w1"></div><div class="line w3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup">
+        <div class="p-head">
+          <div class="p-brand"><span class="p-mark">Y</span><span class="p-name">Stop Yapping</span></div>
+          <div class="p-settings">Settings</div>
+        </div>
+        <div class="p-controls">
+          <div class="p-field"><label>Provider</label><div class="p-select">DeepSeek <span>▾</span></div></div>
+          <div class="p-field"><label>Model</label><div class="p-select">deepseek-flash <span>▾</span></div></div>
+        </div>
+        <div class="p-chips">
+          <span class="p-chip active">TL;DR</span><span class="p-chip">Bullets</span><span class="p-chip">Summary</span><span class="p-chip">Detailed</span>
+        </div>
+        <div class="p-meta">
+          <span class="p-title">The State of Remote Work in 2026</span><span class="p-chars">14.2k chars</span>
+        </div>
+        <div class="p-output">
+          <p><strong>TL;DR: Remote work has settled at ~28% of workdays, but the real shift is from fully remote to hybrid and async-first teams.</strong></p>
+          <ul>
+            <li>Hybrid (3 days in office) is now the norm at 46% of companies.</li>
+            <li>Fully remote roles fell to 12%, concentrated in software and support.</li>
+            <li>Return-to-office mandates track a 9% rise in voluntary attrition.</li>
+          </ul>
+        </div>
+        <div class="p-footer"><div class="p-btn">Summarize page</div><div class="p-btn2">Copy</div></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="color-scheme" content="light" />
+<title>shot 3</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 800px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #14161d; background: #f6f7fb; -webkit-font-smoothing: antialiased;
+  }
+  .canvas {
+    position: relative; width: 1280px; height: 800px; overflow: hidden;
+    background:
+      radial-gradient(820px 560px at 96% 0%, #e7e3ff 0%, rgba(231,227,255,0) 60%),
+      radial-gradient(700px 520px at 0% 100%, #e6efff 0%, rgba(230,239,255,0) 58%),
+      linear-gradient(180deg, #ffffff 0%, #f3f4fa 100%);
+  }
+  .head { position: absolute; left: 0; right: 0; top: 60px; text-align: center; }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800;
+            letter-spacing: .09em; text-transform: uppercase; color: #6366f1; margin-bottom: 18px; }
+  .kicker .mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px;
+                  background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; font-size: 16px; font-weight: 800; }
+  h1 { font-size: 48px; letter-spacing: -.025em; font-weight: 800; }
+  h1 .accent { background: linear-gradient(135deg, #6366f1, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { margin-top: 14px; font-size: 19px; color: #5b6172; }
+
+  .cols { position: absolute; left: 60px; right: 60px; top: 258px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+  .col { background: #fff; border: 1px solid #e2e5ee; border-radius: 14px; padding: 18px;
+         box-shadow: 0 12px 34px rgba(16,18,28,.07); display: flex; flex-direction: column; }
+  .chip { align-self: flex-start; font-size: 12.5px; font-weight: 800; padding: 5px 12px; border-radius: 999px;
+          background: #eef0ff; border: 1px solid #6366f1; color: #4f46e5; margin-bottom: 14px; }
+  .body { font-size: 12.5px; line-height: 1.55; color: #33384a; }
+  .body strong { color: #14161d; }
+  .body p { margin-bottom: 10px; }
+  .body .li { display: flex; gap: 8px; margin-bottom: 7px; }
+  .body .li::before { content: "•"; color: #6366f1; font-weight: 800; }
+  .body h4 { font-size: 12.5px; font-weight: 800; color: #4f46e5; margin: 10px 0 6px; }
+  .body .line { height: 9px; border-radius: 5px; background: #e9ecf4; margin-bottom: 7px; }
+  .body .line.s { width: 68%; }
+
+  .foot { position: absolute; left: 0; right: 0; bottom: 56px; text-align: center; font-size: 16px; color: #5b6172; }
+  .foot b { color: #4f46e5; font-weight: 800; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="head">
+      <div class="kicker"><span class="mark">Y</span> Stop Yapping</div>
+      <h1>Four ways to read. <span class="accent">Pick how long.</span></h1>
+      <p class="sub">Same page, different depth — switch styles with one tap.</p>
+    </div>
+
+    <div class="cols">
+      <div class="col">
+        <div class="chip">TL;DR</div>
+        <div class="body">
+          <p><strong>Remote work has settled at ~28% of workdays, but the real shift is hybrid.</strong></p>
+          <div class="li">Hybrid is now the norm at 46% of firms</div>
+          <div class="li">Fully remote fell to 12%</div>
+          <div class="li">Mandates track +9% attrition</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="chip">Bullets</div>
+        <div class="body">
+          <div class="li">Hybrid (3 days) leads at 46% of companies</div>
+          <div class="li">Fully remote roles dropped to 12%</div>
+          <div class="li">Software and support stay most remote</div>
+          <div class="li">Return-to-office mandates raise attrition 9%</div>
+          <div class="li">Async-first teams report the highest output</div>
+          <div class="li">Office space costs fell 14% year over year</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="chip">Summary</div>
+        <div class="body">
+          <p>After three years of swings, remote work has stabilized rather than disappeared. The debate has moved from where people work to how teams coordinate across time zones.</p>
+          <h4>Key takeaways</h4>
+          <div class="li">Hybrid won</div>
+          <div class="li">Attrition follows mandates</div>
+          <div class="li">Async is the differentiator</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="chip">Detailed</div>
+        <div class="body">
+          <h4>Overview</h4>
+          <div class="line"></div><div class="line s"></div>
+          <h4>Key points</h4>
+          <div class="line"></div><div class="line s"></div>
+          <h4>Important details</h4>
+          <div class="line"></div><div class="line"></div>
+          <h4>Takeaways</h4>
+          <div class="line s"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">One click on any page · <b>streamed as it writes</b> · works on articles, forums, docs and threads</div>
+  </div>
+</body>
+</html>

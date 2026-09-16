@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stop Yapping — Settings</title>
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand-mark">Y</span>
+          <div>
+            <h1>Stop Yapping Settings</h1>
+            <p class="hint">Bring your own API key. Nothing is sent anywhere except your chosen provider.</p>
+          </div>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Defaults</h2>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label for="language">Output language</label>
+            <input id="language" type="text" placeholder="English" />
+          </div>
+          <div class="field">
+            <label for="length">Summary style</label>
+            <select id="length">
+              <option value="tldr">TL;DR — one line + 3 bullets</option>
+              <option value="bullets">Bullets — 5-8 points</option>
+              <option value="summary">Summary — paragraphs + takeaways</option>
+              <option value="detailed">Detailed — structured sections</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="maxInputChars">Max page text (characters)</label>
+            <input id="maxInputChars" type="number" min="2000" max="120000" step="1000" />
+          </div>
+          <div class="field">
+            <label for="temperature">Temperature</label>
+            <input id="temperature" type="number" min="0" max="1" step="0.1" />
+          </div>
+        </div>
+        <label class="check">
+          <input id="autoSummarize" type="checkbox" />
+          <span>Summarize automatically when the popup opens</span>
+        </label>
+      </section>
+
+      <h2 class="section-title">Providers</h2>
+      <div id="providers" class="providers"></div>
+
+      <section class="card custom-card" id="custom-card">
+        <div class="card-head">
+          <h2>Custom (OpenAI-compatible)</h2>
+        </div>
+        <p class="hint">
+          Point this at any OpenAI-compatible endpoint (LM Studio, vLLM, a proxy, etc.). Chrome will ask
+          for permission to access the host.
+        </p>
+        <div class="grid">
+          <div class="field">
+            <label for="customBaseUrl">Base URL</label>
+            <input id="customBaseUrl" type="text" placeholder="https://my-endpoint.example.com/v1" />
+          </div>
+          <div class="field">
+            <label for="customModel">Model name</label>
+            <input id="customModel" type="text" placeholder="my-model" />
+          </div>
+          <div class="field">
+            <label for="customKey">API key (optional)</label>
+            <input id="customKey" type="password" placeholder="leave empty if not required" />
+          </div>
+        </div>
+        <div class="actions">
+          <button id="custom-save" class="btn">Save & grant access</button>
+          <button id="custom-test" class="btn">Test</button>
+          <span id="custom-result" class="test-result" hidden></span>
+        </div>
+      </section>
+
+      <section class="card danger-card">
+        <div class="card-head">
+          <h2>Data</h2>
+        </div>
+        <p class="hint">
+          Keys are stored only in this browser profile (<code>chrome.storage.local</code>) and are never
+          synced or transmitted to us. Anyone with access to your profile can read them.
+        </p>
+        <button id="reset" class="btn btn-danger">Delete all keys and settings</button>
+      </section>
+    </div>
+
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

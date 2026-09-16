@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stop Yapping</title>
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark">Y</span>
+        <span class="brand-name">Stop Yapping</span>
+      </div>
+      <button id="open-settings" class="btn btn-ghost" title="Settings">Settings</button>
+    </header>
+
+    <section class="controls">
+      <div class="field">
+        <label for="provider">Provider</label>
+        <select id="provider"></select>
+      </div>
+      <div class="field" id="model-field">
+        <label for="model">Model</label>
+      </div>
+    </section>
+
+    <section class="length-row" id="length-row">
+      <button class="chip" data-length="tldr">TL;DR</button>
+      <button class="chip" data-length="bullets">Bullets</button>
+      <button class="chip" data-length="summary">Summary</button>
+      <button class="chip" data-length="detailed">Detailed</button>
+    </section>
+
+    <div id="page-meta" class="page-meta" hidden>
+      <span id="page-title" class="page-title"></span>
+      <span id="page-chars" class="page-chars"></span>
+    </div>
+
+    <main id="output" class="output">
+      <div id="empty-state" class="empty-state">
+        <p>Click <strong>Summarize</strong> to get the gist of the page you're on.</p>
+      </div>
+      <div id="status" class="status" hidden></div>
+      <div id="result" class="result" hidden></div>
+    </main>
+
+    <footer class="app-footer">
+      <button id="action" class="btn btn-primary grow">Summarize page</button>
+      <button id="copy" class="btn" title="Copy summary" disabled>Copy</button>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

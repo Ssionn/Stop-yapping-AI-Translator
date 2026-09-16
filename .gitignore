@@ -1,0 +1,6 @@
+# Unrelated local projects kept on this machine
+/dayluma-laravel/
+/homebase/
+
+# Release artifacts
+/*.zip
