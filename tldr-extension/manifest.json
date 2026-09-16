@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Stop Yapping — AI Translator",
-  "version": "1.0.1",
-  "description": "Stop yapping. Summarize any page in one click with your API key — Anthropic, OpenAI, DeepSeek, Gemini, Groq, OpenRouter.",
+  "version": "1.0.2",
+  "description": "Stop yapping. Get a 30-second summary of any page using your own AI provider key. No account, no tracking.",
   "minimum_chrome_version": "116",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": [
